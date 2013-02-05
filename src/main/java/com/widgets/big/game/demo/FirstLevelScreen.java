@@ -26,7 +26,7 @@ public class FirstLevelScreen extends Screen {
 
 	public static GameState gameState = GameState.RUNNING;
 
-	private static final boolean DEBUG_ENABLED = false;
+	private static final boolean DEBUG_ENABLED = true;
 
 	// Constants
 	private static final int KEY_LEFT = 37;
@@ -53,6 +53,8 @@ public class FirstLevelScreen extends Screen {
 	@Override
 	public void init() {
 		Assets.hero = new Player(20, 20);
+
+		boundaries = Assets.hero.getBoundaries();
 
 		Enemy enemy1 = new Enemy(300, 390, Assets.enemy);
 		Enemy enemy2 = new Enemy(700, 390, Assets.enemy);
@@ -91,7 +93,7 @@ public class FirstLevelScreen extends Screen {
 
 		ArrayList<Bullet> projectiles = Assets.hero.getProjectiles();
 		for (int i = 0; i < projectiles.size(); i++) {
-			Bullet p = (Bullet) projectiles.get(i);
+			Bullet p = projectiles.get(i);
 			if (p.isVisible() == true) {
 				p.update(50);
 			} else {
@@ -192,8 +194,8 @@ public class FirstLevelScreen extends Screen {
 		keyEvents = game.getInput().getKeyEvents();
 		for (KeyEvent keyEvent : keyEvents) {
 			if (keyEvent.type == Input.KeyEvent.KEY_DOWN) {
-				System.out.println(keyEvent.keyChar + " character pressed");
-				System.out.println(keyEvent.keyCode + " code pressed");
+				// System.out.println(keyEvent.keyChar + " character pressed");
+				// System.out.println(keyEvent.keyCode + " code pressed");
 				switch (keyEvent.keyCode) {
 				case KEY_RIGHT:
 					Assets.hero.moveRight();
