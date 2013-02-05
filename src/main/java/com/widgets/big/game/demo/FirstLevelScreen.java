@@ -61,8 +61,10 @@ public class FirstLevelScreen extends Screen {
 		Enemy enemy3 = new Enemy(1000, 390, Assets.enemy);
 		Enemy enemy4 = new Enemy(1300, 390, Assets.enemy);
 		Enemy enemy5 = new Enemy(1600, 390, Assets.enemy);
+		Enemy enemy6 = new Enemy(1900, 390, Assets.enemy);
 
-		Assets.enemies = Arrays.asList(enemy1, enemy2, enemy3, enemy4, enemy5);
+		Assets.enemies = Arrays.asList(enemy1, enemy2, enemy3, enemy4, enemy5,
+				enemy6);
 
 		Assets.bg1 = new Background(0, 0);
 		Assets.bg2 = new Background(2160, 0);
