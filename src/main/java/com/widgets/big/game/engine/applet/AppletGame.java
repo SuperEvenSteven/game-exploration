@@ -1,0 +1,126 @@
+package com.widgets.big.game.engine.applet;
+
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Frame;
+
+import com.widgets.big.game.demo.Assets;
+import com.widgets.big.game.framework.Game;
+import com.widgets.big.game.framework.Graphics;
+import com.widgets.big.game.framework.Input;
+import com.widgets.big.game.framework.Screen;
+import com.widgets.big.game.utils.Utils;
+
+public class AppletGame extends Applet implements Runnable, Game {
+
+	private static final long serialVersionUID = 2397885928260855130L;
+
+	private Screen screen;
+
+	float deltaTimeMs = 0;
+
+	java.awt.Graphics second;
+
+	float timeLastRunMs = System.nanoTime();
+
+	private AppletGraphics graphics;
+
+	private AppletInput input;
+
+	@Override
+	public void init() {
+
+		System.out.println("game applet init method fired");
+
+		screen = getStartScreen();
+
+		setSize(800, 480);
+		setBackground(Color.BLACK);
+		setFocusable(true);
+		Frame frame = (Frame) this.getParent().getParent();
+		frame.setTitle("Alien Game");
+
+		graphics = new AppletGraphics();
+		input = new AppletInput(this);
+
+	}
+
+	// Starts the thread that runs our main game loop
+	@Override
+	public void start() {
+		System.out.println("game applet start method fired");
+		Thread thread = new Thread(this);
+		thread.start();
+	}
+
+	// update the game every time this loops
+	public void run() {
+		System.out.println("starting loop");
+		while (true) {
+			try {
+				deltaTimeMs = Utils.calculateDeltaMs(timeLastRunMs);
+				screen.update(deltaTimeMs);
+				repaint();
+
+				// at full speed this will run at 60fps by sleeping for 17ms
+				// every frame
+				Thread.sleep(17);
+			} catch (InterruptedException e) {
+				System.out.println(e.getMessage());
+				System.out.println(e);
+			}
+			timeLastRunMs = System.nanoTime();
+		}
+	}
+
+	// Double buffering trick
+	@Override
+	public void update(java.awt.Graphics g) {
+		if (Assets.image == null) {
+			Assets.image = createImage(this.getWidth(), this.getHeight());
+			second = Assets.image.getGraphics();
+		}
+
+		second.setColor(getBackground());
+		second.fillRect(0, 0, getWidth(), getHeight());
+		second.setColor(getForeground());
+		paint(second);
+
+		g.drawImage(Assets.image, 0, 0, this);
+	}
+
+	@Override
+	public void paint(java.awt.Graphics g) {
+		screen.paint(g, this);
+	}
+
+	public Input getInput() {
+		return input;
+	}
+
+	public Screen getCurrentScreen() {
+		return screen;
+	}
+
+	public void setScreen(Screen screen) {
+		if (screen == null)
+			throw new IllegalArgumentException("Screen must not be null");
+
+		// this.screen.pause();
+		// this.screen.dispose();
+		// screen.resume();
+		screen.update(0);
+		this.screen = screen;
+
+	}
+
+	public Graphics getGameGraphics() {
+		return graphics;
+	}
+
+	@Override
+	public Screen getStartScreen() {
+		return null;
+	}
+
+}
