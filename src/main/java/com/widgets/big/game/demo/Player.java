@@ -4,8 +4,12 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.widgets.big.game.demo.FirstLevelScreen.GameState;
+import com.widgets.big.game.demo.assets.AssetBackground;
+import com.widgets.big.game.demo.assets.AssetSprite;
+import com.widgets.big.game.demo.assets.Assets;
+import com.widgets.big.game.demo.assets.Assets.AssetType;
 import com.widgets.big.game.engine.applet.Sprite;
+import com.widgets.big.game.framework.Background;
 
 public class Player {
 
@@ -42,13 +46,27 @@ public class Player {
 	// public static Rectangle footRight = new Rectangle(0, 0, 0, 0);
 
 	private final ArrayList<Bullet> projectiles = new ArrayList<Bullet>();
-	private final Sprite standingSprite = Assets.heroStanding;
-	private final Sprite walkingLeftSprite = Assets.heroWalkingLeft;
-	private final Sprite walkingRightSprite = Assets.heroWalkingRight;
-	private final Sprite jumpingLeftSprite = Assets.heroJumpingLeft;
-	private final Sprite jumpingRightSprite = Assets.heroJumpingRight;
-	private final Sprite duckingSprite = Assets.heroDucking;
-	private Sprite currentSprite = Assets.heroStanding;
+
+	private final Assets assets = Assets.instance();
+
+	private final Sprite standingSprite = ((AssetSprite) assets
+			.get(AssetType.PLAYER_STANDING)).getSprite();
+	private final Sprite walkingLeftSprite = ((AssetSprite) assets
+			.get(AssetType.PLAYER_WALK_LEFT)).getSprite();
+	private final Sprite walkingRightSprite = ((AssetSprite) assets
+			.get(AssetType.PLAYER_WALK_RIGHT)).getSprite();
+	private final Sprite jumpingLeftSprite = ((AssetSprite) assets
+			.get(AssetType.PLAYER_JUMP_LEFT)).getSprite();
+	private final Sprite jumpingRightSprite = ((AssetSprite) assets
+			.get(AssetType.PLAYER_JUMP_RIGHT)).getSprite();
+	private final Sprite duckingSprite = ((AssetSprite) assets
+			.get(AssetType.PLAYER_DUCK)).getSprite();
+	private Sprite currentSprite = standingSprite;
+
+	private final Background bg1 = ((AssetBackground) assets
+			.get(AssetType.BACKGROUND1)).getBackground();
+	private final Background bg2 = ((AssetBackground) assets
+			.get(AssetType.BACKGROUND2)).getBackground();
 
 	public Player(int centerX, int centerY) {
 
@@ -67,16 +85,16 @@ public class Player {
 			centerX += speedX;
 		}
 		if (speedX == 0 || speedX < 0) {
-			Assets.bg1.setSpeedX(0);
-			Assets.bg2.setSpeedX(0);
+			bg1.setSpeedX(0);
+			bg2.setSpeedX(0);
 
 		}
 		if (centerX <= 200 && speedX > 0) {
 			centerX += speedX;
 		}
 		if (speedX > 0 && centerX > 200) {
-			Assets.bg1.setSpeedX(-MOVESPEED / 5);
-			Assets.bg2.setSpeedX(-MOVESPEED / 5);
+			bg1.setSpeedX(-MOVESPEED / 5);
+			bg2.setSpeedX(-MOVESPEED / 5);
 		}
 
 		// Updates Y Position

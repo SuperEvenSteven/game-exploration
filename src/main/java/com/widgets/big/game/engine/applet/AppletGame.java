@@ -3,8 +3,8 @@ package com.widgets.big.game.engine.applet;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Image;
 
-import com.widgets.big.game.demo.Assets;
 import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Graphics;
 import com.widgets.big.game.framework.Input;
@@ -26,6 +26,8 @@ public class AppletGame extends Applet implements Runnable, Game {
 	private AppletGraphics graphics;
 
 	private AppletInput input;
+
+	private Image image;
 
 	@Override
 	public void init() {
@@ -54,6 +56,7 @@ public class AppletGame extends Applet implements Runnable, Game {
 	}
 
 	// update the game every time this loops
+	@Override
 	public void run() {
 		System.out.println("starting loop");
 		while (true) {
@@ -76,9 +79,9 @@ public class AppletGame extends Applet implements Runnable, Game {
 	// Double buffering trick
 	@Override
 	public void update(java.awt.Graphics g) {
-		if (Assets.image == null) {
-			Assets.image = createImage(this.getWidth(), this.getHeight());
-			second = Assets.image.getGraphics();
+		if (image == null) {
+			image = createImage(this.getWidth(), this.getHeight());
+			second = image.getGraphics();
 		}
 
 		second.setColor(getBackground());
@@ -86,7 +89,7 @@ public class AppletGame extends Applet implements Runnable, Game {
 		second.setColor(getForeground());
 		paint(second);
 
-		g.drawImage(Assets.image, 0, 0, this);
+		g.drawImage(image, 0, 0, this);
 	}
 
 	@Override
@@ -94,14 +97,17 @@ public class AppletGame extends Applet implements Runnable, Game {
 		screen.paint(g, this);
 	}
 
+	@Override
 	public Input getInput() {
 		return input;
 	}
 
+	@Override
 	public Screen getCurrentScreen() {
 		return screen;
 	}
 
+	@Override
 	public void setScreen(Screen screen) {
 		if (screen == null)
 			throw new IllegalArgumentException("Screen must not be null");
@@ -114,6 +120,7 @@ public class AppletGame extends Applet implements Runnable, Game {
 
 	}
 
+	@Override
 	public Graphics getGameGraphics() {
 		return graphics;
 	}

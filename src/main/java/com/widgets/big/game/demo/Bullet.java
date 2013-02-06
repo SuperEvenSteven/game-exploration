@@ -1,6 +1,11 @@
 package com.widgets.big.game.demo;
 
 import java.awt.Rectangle;
+import java.util.List;
+
+import com.widgets.big.game.demo.assets.AssetEnemies;
+import com.widgets.big.game.demo.assets.Assets;
+import com.widgets.big.game.demo.assets.Assets.AssetType;
 
 public class Bullet {
 
@@ -8,6 +13,10 @@ public class Bullet {
 	private boolean visible;
 
 	private Rectangle collisionBoundary;
+
+	private final Assets assets = Assets.instance();
+	private final List<Enemy> enemies = ((AssetEnemies) assets
+			.get(AssetType.ENEMIES)).getEnemies();
 
 	public Bullet(int startX, int startY) {
 		x = startX;
@@ -32,7 +41,7 @@ public class Bullet {
 
 	private void checkCollision() {
 
-		for (Enemy enemy : Assets.enemies) {
+		for (Enemy enemy : enemies) {
 
 			if (collisionBoundary.intersects(enemy.getCollisionBoundary())) {
 				visible = false;

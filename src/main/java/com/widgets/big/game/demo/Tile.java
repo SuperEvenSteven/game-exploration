@@ -4,6 +4,12 @@ import java.awt.Image;
 import java.awt.Rectangle;
 
 import com.widgets.big.game.demo.Player.ActionState;
+import com.widgets.big.game.demo.assets.AssetBackground;
+import com.widgets.big.game.demo.assets.AssetImage;
+import com.widgets.big.game.demo.assets.AssetPlayer;
+import com.widgets.big.game.demo.assets.Assets;
+import com.widgets.big.game.demo.assets.Assets.AssetType;
+import com.widgets.big.game.framework.Background;
 
 /**
  * @author Stephen O'Hair
@@ -19,7 +25,11 @@ public class Tile {
 	private int tileX, tileY, speedX, type;
 	private Image tileImage;
 
-	private final Player hero = Assets.hero;
+	private final Assets assets = Assets.instance();
+	private final Player hero = ((AssetPlayer) assets.get(AssetType.HERO))
+			.getPlayer();
+	private final Background bg1 = ((AssetBackground) assets
+			.get(AssetType.BACKGROUND1)).getBackground();
 
 	private final Rectangle tileBoundary;
 
@@ -32,17 +42,22 @@ public class Tile {
 		tileBoundary = new Rectangle(0, 0, 0, 0);
 
 		if (type == DIRT) {
-			tileImage = Assets.tileDirt;
+			tileImage = ((AssetImage) Assets.instance()
+					.get(AssetType.TILE_DIRT)).getImage();
 		} else if (type == GROUND) {
-			tileImage = Assets.tilegrassTop;
+			tileImage = ((AssetImage) Assets.instance().get(
+					AssetType.TILE_GRASS_TOP)).getImage();
 		} else if (type == LEFT_GROUND) {
-			tileImage = Assets.tilegrassLeft;
+			tileImage = ((AssetImage) Assets.instance().get(
+					AssetType.TILE_GRASS_LEFT)).getImage();
 
 		} else if (type == RIGHT_GROUND) {
-			tileImage = Assets.tilegrassRight;
+			tileImage = ((AssetImage) Assets.instance().get(
+					AssetType.TILE_GRASS_RIGHT)).getImage();
 
 		} else if (type == CEILING) {
-			tileImage = Assets.tilegrassBot;
+			tileImage = ((AssetImage) Assets.instance().get(
+					AssetType.TILE_GRASS_BOT)).getImage();
 		} else {
 			type = 0;
 		}
@@ -50,7 +65,7 @@ public class Tile {
 	}
 
 	public void update(float deltaTimeElapsedMs) {
-		speedX = Assets.bg1.getSpeedX() * 5;
+		speedX = bg1.getSpeedX() * 5;
 		tileX += speedX;
 		// move the tile boundary in sync with the tile itself
 		tileBoundary.setBounds(tileX, tileY, 40, 40);
@@ -97,19 +112,19 @@ public class Tile {
 				Player.ENTIRE_PLAYER))) {
 			switch (type) {
 			case GROUND:
-				Assets.hero.setJumped(false);
-				if (Assets.hero.getSpeedX() == 0 && !Assets.hero.isDucked()) {
-					Assets.hero.setSpriteAction(ActionState.STANDING);
-				} else if (Assets.hero.getSpeedX() > 0)
-					Assets.hero.setSpriteAction(ActionState.WALKING_RIGHT);
-				else if (Assets.hero.getSpeedX() < 0)
-					Assets.hero.setSpriteAction(ActionState.WALKING_LEFT);
-				Assets.hero.setSpeedY(0);
-				Assets.hero.setCenterY(tileY - 19);
+				hero.setJumped(false);
+				if (hero.getSpeedX() == 0 && !hero.isDucked()) {
+					hero.setSpriteAction(ActionState.STANDING);
+				} else if (hero.getSpeedX() > 0)
+					hero.setSpriteAction(ActionState.WALKING_RIGHT);
+				else if (hero.getSpeedX() < 0)
+					hero.setSpriteAction(ActionState.WALKING_LEFT);
+				hero.setSpeedY(0);
+				hero.setCenterY(tileY - 19);
 				// System.out.println("player collided with ground or dir");
 				break;
 			case CEILING:
-				Assets.hero.setCenterY(tileY + 63);
+				hero.setCenterY(tileY + 63);
 				// System.out.println("player collided with ceiling");
 				break;
 			}
@@ -121,12 +136,12 @@ public class Tile {
 				Player.LEFT_SIDE_PLAYER))) {
 			switch (type) {
 			case DIRT:
-				Assets.hero.setSpeedX(0);
-				Assets.hero.setCenterX(tileX + 19);
+				hero.setSpeedX(0);
+				hero.setCenterX(tileX + 19);
 				break;
 			case LEFT_GROUND:
-				Assets.hero.setSpeedX(0);
-				Assets.hero.setCenterX(tileX + 19);
+				hero.setSpeedX(0);
+				hero.setCenterX(tileX + 19);
 				break;
 			// System.out.println("player collided on left side");
 			}
@@ -135,11 +150,11 @@ public class Tile {
 				Player.RIGHT_SIDE_PLAYER))) {
 			switch (type) {
 			case DIRT:
-				Assets.hero.setSpeedX(0);
-				Assets.hero.setCenterX(tileX - 19);
+				hero.setSpeedX(0);
+				hero.setCenterX(tileX - 19);
 			case RIGHT_GROUND:
-				Assets.hero.setSpeedX(0);
-				Assets.hero.setCenterX(tileX - 19);
+				hero.setSpeedX(0);
+				hero.setCenterX(tileX - 19);
 				break;
 			}
 			// System.out.println("player collided on right side");

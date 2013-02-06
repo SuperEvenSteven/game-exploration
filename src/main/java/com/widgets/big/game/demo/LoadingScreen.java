@@ -1,14 +1,18 @@
 package com.widgets.big.game.demo;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import com.widgets.big.game.demo.assets.AssetEnemies;
+import com.widgets.big.game.demo.assets.AssetImage;
+import com.widgets.big.game.demo.assets.AssetSprite;
+import com.widgets.big.game.demo.assets.Assets;
+import com.widgets.big.game.demo.assets.Assets.AssetType;
 import com.widgets.big.game.engine.applet.AppletGame;
 import com.widgets.big.game.engine.applet.Sprite;
 import com.widgets.big.game.framework.Game;
@@ -23,45 +27,66 @@ public class LoadingScreen extends Screen {
 	@Override
 	public void update(float deltaTimeMs) {
 		System.out.println("loaded resources");
-		// Setup hero images and load them into Sprites
-		Assets.characterStanding = getImage("sprites/standing.png");
-		Assets.characterWalkingLeft = getImage("sprites/walking_left.png");
-		Assets.characterWalkingRight = getImage("sprites/walking_right.png");
-		Assets.characterDucking = getImage("sprites/ducking.png");
-		Assets.characterJumpingRight = getImage("sprites/jumping_right.png");
-		Assets.characterJumpingLeft = getImage("sprites/jumping_left.png");
+		// Setup hero images
+		BufferedImage characterStanding = getImage("sprites/standing.png");
+		BufferedImage characterWalkingLeft = getImage("sprites/walking_left.png");
+		BufferedImage characterWalkingRight = getImage("sprites/walking_right.png");
+		BufferedImage characterDucking = getImage("sprites/ducking.png");
+		BufferedImage characterJumpingRight = getImage("sprites/jumping_right.png");
+		BufferedImage characterJumpingLeft = getImage("sprites/jumping_left.png");
+
+		Assets assets = Assets.instance();
 
 		// Animation Sprites
 		int[] standingDuration = { 500 };
-		Assets.heroStanding = new Sprite(Assets.characterStanding, 40, 1,
-				standingDuration);
+		AssetSprite standingSprite = new AssetSprite(new Sprite(
+				characterStanding, 40, 1, standingDuration));
 		int[] walkingDuration = { 150, 150, 150 };
-		Assets.heroWalkingLeft = new Sprite(Assets.characterWalkingLeft, 40, 3,
-				walkingDuration);
-		Assets.heroWalkingRight = new Sprite(Assets.characterWalkingRight, 40,
-				3, walkingDuration);
+		AssetSprite heroWalkingLeft = new AssetSprite(new Sprite(
+				characterWalkingLeft, 40, 3, walkingDuration));
+		AssetSprite heroWalkingRight = new AssetSprite(new Sprite(
+				characterWalkingRight, 40, 3, walkingDuration));
 		int[] jumpingDuration = { 500 };
-		Assets.heroJumpingLeft = new Sprite(Assets.characterJumpingLeft, 40, 1,
-				jumpingDuration);
-		Assets.heroJumpingRight = new Sprite(Assets.characterJumpingRight, 40,
-				1, jumpingDuration);
+		AssetSprite heroJumpingLeft = new AssetSprite(new Sprite(
+				characterJumpingLeft, 40, 1, jumpingDuration));
+		AssetSprite heroJumpingRight = new AssetSprite(new Sprite(
+				characterJumpingRight, 40, 1, jumpingDuration));
 		int[] duckingDuration = { 500 };
-		Assets.heroDucking = new Sprite(Assets.characterDucking, 40, 1,
-				duckingDuration);
+		AssetSprite heroDucking = new AssetSprite(new Sprite(characterDucking,
+				40, 1, duckingDuration));
 
-		Assets.heliboy = getImage("sprites/heliboy.png");
+		assets.put(AssetType.PLAYER_STANDING, standingSprite);
+		assets.put(AssetType.PLAYER_WALK_LEFT, heroWalkingLeft);
+		assets.put(AssetType.PLAYER_WALK_RIGHT, heroWalkingRight);
+		assets.put(AssetType.PLAYER_JUMP_LEFT, heroJumpingLeft);
+		assets.put(AssetType.PLAYER_JUMP_RIGHT, heroJumpingRight);
+		assets.put(AssetType.PLAYER_DUCK, heroDucking);
+
+		BufferedImage heliboy = getImage("sprites/heliboy.png");
 		int[] enemyFrameDuration = { 50, 50, 50, 50, 50 };
-		Assets.enemy = new Sprite(Assets.heliboy, 96, 5, enemyFrameDuration);
+		AssetSprite enemy1 = new AssetSprite(new Sprite(heliboy, 96, 5,
+				enemyFrameDuration));
+		assets.put(AssetType.ENEMY, enemy1);
 
-		// Load backgrounds
-		Assets.background = getImage("backgrounds/background.png");
+		// Load background iamge to repeat
+		BufferedImage background = getImage("backgrounds/background.png");
+		assets.put(AssetType.BACKGROUND, new AssetImage(background));
 
 		// Load tiles for tilemap
-		Assets.tileDirt = getImage("tiles/tiledirt.png");
-		Assets.tilegrassTop = getImage("tiles/tilegrasstop.png");
-		Assets.tilegrassBot = getImage("tiles/tilegrassbot.png");
-		Assets.tilegrassLeft = getImage("tiles/tilegrassleft.png");
-		Assets.tilegrassRight = getImage("tiles/tilegrassright.png");
+		BufferedImage tileDirt = getImage("tiles/tiledirt.png");
+		BufferedImage tilegrassTop = getImage("tiles/tilegrasstop.png");
+		BufferedImage tilegrassBot = getImage("tiles/tilegrassbot.png");
+		BufferedImage tilegrassLeft = getImage("tiles/tilegrassleft.png");
+		BufferedImage tilegrassRight = getImage("tiles/tilegrassright.png");
+
+		assets.put(AssetType.TILE_DIRT, new AssetImage(tileDirt));
+		assets.put(AssetType.TILE_GRASS_TOP, new AssetImage(tilegrassTop));
+		assets.put(AssetType.TILE_GRASS_BOT, new AssetImage(tilegrassBot));
+		assets.put(AssetType.TILE_GRASS_LEFT, new AssetImage(tilegrassLeft));
+		assets.put(AssetType.TILE_GRASS_RIGHT, new AssetImage(tilegrassRight));
+
+		assets.put(AssetType.ENEMIES, new AssetEnemies(new ArrayList<Enemy>()));
+
 		System.out.println("resources loaded");
 
 		game.setScreen(new MenuScreen(game));
