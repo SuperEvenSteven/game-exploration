@@ -6,14 +6,12 @@ import java.awt.Frame;
 import java.awt.Image;
 
 import com.widgets.big.game.event.NewScreen;
-import com.widgets.big.game.framework.Game;
-import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Screen;
 import com.widgets.big.game.framework.Util;
 import com.widgets.big.game.utils.Utils;
 import com.widgets.util.controller.ControllerListener;
 
-public class AppletGame extends Applet implements Runnable, Game {
+public class AppletGame extends Applet {
 
 	private static final long serialVersionUID = 2397885928260855130L;
 
@@ -29,12 +27,17 @@ public class AppletGame extends Applet implements Runnable, Game {
 
 	private Image image;
 
+	private Runnable runnable;
+
+	public AppletGame(Screen startScreen) {
+		screen = startScreen;
+	}
+
 	@Override
 	public void init() {
 
 		System.out.println("game applet init method fired");
 
-		screen = getStartScreen();
 		setSize(800, 480);
 		setBackground(Color.BLACK);
 		setFocusable(true);
@@ -58,13 +61,18 @@ public class AppletGame extends Applet implements Runnable, Game {
 	@Override
 	public void start() {
 		System.out.println("game applet start method fired");
-		Thread thread = new Thread(this);
+		runnable = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				AppletGame.this.run();
+			}
+		});
+		Thread thread = new Thread(runnable);
 		thread.start();
 	}
 
 	// update the game every time this loops
-	@Override
-	public void run() {
+	private void run() {
 		System.out.println("starting loop");
 		while (true) {
 			try {
@@ -104,18 +112,7 @@ public class AppletGame extends Applet implements Runnable, Game {
 		screen.paint(g, this);
 	}
 
-	@Override
-	public Input getInput() {
-		return input;
-	}
-
-	@Override
-	public Screen getCurrentScreen() {
-		return screen;
-	}
-
-	@Override
-	public void setScreen(Screen screen) {
+	private void setScreen(Screen screen) {
 		if (screen == null)
 			throw new IllegalArgumentException("Screen must not be null");
 
@@ -125,11 +122,6 @@ public class AppletGame extends Applet implements Runnable, Game {
 		screen.update(0, input.getKeyEvents());
 		this.screen = screen;
 
-	}
-
-	@Override
-	public Screen getStartScreen() {
-		return null;
 	}
 
 }
