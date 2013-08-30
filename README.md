@@ -1,7 +1,7 @@
 game-exploration
 ================
 
-Used mainly for projects related to game development. (Still under development)
+Demonstration sprite based games written in java using swing.
 
 Run game either as an applet or via a main class.
 
