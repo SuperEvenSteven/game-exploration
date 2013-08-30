@@ -16,7 +16,7 @@ import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
 import com.widgets.big.game.engine.applet.Sprite;
-import com.widgets.big.game.event.NewScreen;
+import com.widgets.big.game.event.ScreenToDisplay;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
 import com.widgets.big.game.framework.Util;
@@ -88,7 +88,7 @@ public class LoadingScreen implements Screen {
 
 		System.out.println("resources loaded");
 
-		Util.controller().event(new NewScreen(new MenuScreen()));
+		Util.controller().event(new ScreenToDisplay(new MenuScreen()));
 	}
 
 	private BufferedImage getImage(String path) {

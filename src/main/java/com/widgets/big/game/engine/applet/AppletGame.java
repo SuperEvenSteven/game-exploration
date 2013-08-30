@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Image;
 
-import com.widgets.big.game.event.NewScreen;
+import com.widgets.big.game.event.ScreenToDisplay;
 import com.widgets.big.game.framework.Screen;
 import com.widgets.big.game.framework.Util;
 import com.widgets.big.game.utils.Utils;
@@ -46,11 +46,11 @@ public class AppletGame extends Applet {
 
 		input = new ComponentInput(this);
 
-		Util.controller().addListener(NewScreen.class,
-				new ControllerListener<NewScreen>() {
+		Util.controller().addListener(ScreenToDisplay.class,
+				new ControllerListener<ScreenToDisplay>() {
 
 					@Override
-					public void event(NewScreen event) {
+					public void event(ScreenToDisplay event) {
 						AppletGame.this.setScreen(event.getScreen());
 					}
 				});
