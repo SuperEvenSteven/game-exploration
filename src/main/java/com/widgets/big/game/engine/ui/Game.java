@@ -17,10 +17,11 @@ public class Game {
 	private final Component component;
 	private final ComponentInput input;
 
-	public Game(Component component, Screen screen) {
+	public Game(Component component, Component keyListeningComponent,
+			Screen screen) {
 		this.component = component;
 		this.screen = screen;
-		input = new ComponentInput(component);
+		input = new ComponentInput(keyListeningComponent);
 		Util.controller().addListener(ScreenToDisplay.class,
 				new ControllerListener<ScreenToDisplay>() {
 

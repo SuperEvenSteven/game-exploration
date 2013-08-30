@@ -10,7 +10,7 @@ public class GameApplet extends Applet {
 
 	private static final long serialVersionUID = 2397885928260855130L;
 
-	private final Game ui;
+	private final Game game;
 
 	/**
 	 * Constructor.
@@ -18,7 +18,7 @@ public class GameApplet extends Applet {
 	 * @param startScreen
 	 */
 	public GameApplet(Screen startScreen) {
-		ui = new Game(this, startScreen);
+		game = new Game(this, this, startScreen);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class GameApplet extends Applet {
 
 		configureApplet();
 
-		ui.init();
+		game.init();
 
 	}
 
@@ -43,17 +43,17 @@ public class GameApplet extends Applet {
 	@Override
 	public void start() {
 		// Starts the thread that runs our main game loop
-		ui.start();
+		game.start();
 	}
 
 	@Override
 	public void update(java.awt.Graphics g) {
-		ui.update(g);
+		game.update(g);
 	}
 
 	@Override
 	public void paint(java.awt.Graphics g) {
-		ui.paint(g);
+		game.paint(g);
 	}
 
 }
