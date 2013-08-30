@@ -9,7 +9,7 @@ public class DemoGameMain {
 			@Override
 			public void run() {
 				GameFrame frame = new GameFrame(new LoadingScreen(),
-						"Alien Game");
+						"Alien Game", 800, 480);
 				frame.setVisible(true);
 				frame.startGame();
 			}

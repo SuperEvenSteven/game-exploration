@@ -12,12 +12,22 @@ public class GameApplet extends Applet {
 
 	private final Game game;
 
+	private final int requestedWidth;
+
+	private final int requestedHeight;
+
+	private final String title;
+
 	/**
 	 * Constructor.
 	 * 
 	 * @param startScreen
 	 */
-	public GameApplet(Screen startScreen) {
+	public GameApplet(Screen startScreen, String title, int requestedWidth,
+			int requestedHeight) {
+		this.title = title;
+		this.requestedWidth = requestedWidth;
+		this.requestedHeight = requestedHeight;
 		game = new Game(this, this, startScreen);
 	}
 
@@ -32,12 +42,11 @@ public class GameApplet extends Applet {
 
 	private void configureApplet() {
 		System.out.println("game applet init method fired");
-
-		setSize(800, 480);
+		setSize(requestedWidth, requestedHeight);
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		Frame frame = (Frame) this.getParent().getParent();
-		frame.setTitle("Alien Game");
+		frame.setTitle(title);
 	}
 
 	@Override
