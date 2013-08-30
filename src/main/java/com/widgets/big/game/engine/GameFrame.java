@@ -11,11 +11,10 @@ public class GameFrame extends JFrame {
 	private static final long serialVersionUID = 4168852368206508729L;
 	private final GamePanel gamePanel;
 
-	public GameFrame(Screen startScreen, String title, int requestedWidth,
-			int requestedHeight) {
+	public GameFrame(Screen startScreen, String title, int w, int h) {
 		setTitle(title);
-		setSize(requestedWidth, requestedHeight);
-		gamePanel = new GamePanel(startScreen, this);
+		setSize(w, h);
+		gamePanel = new GamePanel(startScreen, this, w, h);
 
 		setLayout(new BorderLayout());
 		getContentPane().add(gamePanel, BorderLayout.CENTER);
