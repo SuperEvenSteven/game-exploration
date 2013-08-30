@@ -16,7 +16,7 @@ public class ComponentKeyHandler implements KeyListener {
 	List<KeyEvent> keyEventsBuffer = new ArrayList<KeyEvent>();
 	private final List<KeyEvent> keyEvents = new ArrayList<KeyEvent>();
 
-	public ComponentKeyHandler(Component game) {
+	public ComponentKeyHandler(Component component) {
 		PoolObjectFactory<KeyEvent> factory = new PoolObjectFactory<KeyEvent>() {
 
 			@Override
@@ -25,7 +25,7 @@ public class ComponentKeyHandler implements KeyListener {
 			}
 		};
 		keyEventPool = new Pool<KeyEvent>(factory, 100);
-		game.addKeyListener(this);
+		component.addKeyListener(this);
 	}
 
 	public boolean isKeyPressed(int keyCode) {

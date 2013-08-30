@@ -8,8 +8,8 @@ import com.widgets.big.game.framework.Input;
 public class ComponentInput implements Input {
 	ComponentKeyHandler keyHandler;
 
-	public ComponentInput(Component game) {
-		keyHandler = new ComponentKeyHandler(game);
+	public ComponentInput(Component component) {
+		keyHandler = new ComponentKeyHandler(component);
 	}
 
 	@Override
