@@ -1,27 +1,27 @@
 package com.widgets.big.game.demo;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.util.List;
 
-import com.widgets.big.game.engine.applet.AppletGame;
 import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
 
-public class MenuScreen extends Screen {
+public class MenuScreen implements Screen {
 
 	private static final int KEY_ENTER = 10;
 	private List<KeyEvent> keyEvents;
+	private final Game game;
 
 	public MenuScreen(Game game) {
-		super(game);
+		this.game = game;
 	}
 
 	@Override
 	public void init() {
-		super.init();
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class MenuScreen extends Screen {
 	}
 
 	@Override
-	public void paint(Graphics g, AppletGame game) {
+	public void paint(Graphics g, Component game) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 800, 480);
 		g.setColor(Color.WHITE);

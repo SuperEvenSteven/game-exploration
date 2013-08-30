@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Image;
 
+import com.widgets.big.game.event.NewScreen;
 import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Graphics;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Screen;
+import com.widgets.big.game.framework.Util;
 import com.widgets.big.game.utils.Utils;
+import com.widgets.util.controller.ControllerListener;
 
 public class AppletGame extends Applet implements Runnable, Game {
 
@@ -35,7 +38,6 @@ public class AppletGame extends Applet implements Runnable, Game {
 		System.out.println("game applet init method fired");
 
 		screen = getStartScreen();
-
 		setSize(800, 480);
 		setBackground(Color.BLACK);
 		setFocusable(true);
@@ -44,6 +46,16 @@ public class AppletGame extends Applet implements Runnable, Game {
 
 		graphics = new AppletGraphics();
 		input = new AppletInput(this);
+
+		Util.controller().addListener(NewScreen.class,
+				new ControllerListener<NewScreen>() {
+
+					@Override
+					public void event(NewScreen event) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 	}
 

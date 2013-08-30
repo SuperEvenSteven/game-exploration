@@ -1,6 +1,7 @@
 package com.widgets.big.game.demo;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -17,7 +18,6 @@ import com.widgets.big.game.demo.assets.AssetPlayer;
 import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
-import com.widgets.big.game.engine.applet.AppletGame;
 import com.widgets.big.game.engine.applet.Sprite;
 import com.widgets.big.game.framework.Background;
 import com.widgets.big.game.framework.Game;
@@ -26,7 +26,7 @@ import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
 import com.widgets.big.game.utils.MapLoader;
 
-public class FirstLevelScreen extends Screen {
+public class FirstLevelScreen implements Screen {
 
 	enum GameState {
 		RUNNING, DEAD
@@ -63,8 +63,10 @@ public class FirstLevelScreen extends Screen {
 
 	private BufferedImage background;
 
+	private final Game game;
+
 	public FirstLevelScreen(Game game) {
-		super(game);
+		this.game = game;
 		init();
 	}
 
@@ -144,7 +146,7 @@ public class FirstLevelScreen extends Screen {
 	}
 
 	@Override
-	public void paint(Graphics g, AppletGame game) {
+	public void paint(Graphics g, Component game) {
 
 		if (gameState == GameState.RUNNING) {
 
@@ -200,7 +202,7 @@ public class FirstLevelScreen extends Screen {
 		}
 	}
 
-	private void paintTiles(Graphics g, AppletGame game) {
+	private void paintTiles(Graphics g, Component game) {
 		for (int i = 0; i < tiles.size(); i++) {
 			Tile t = tiles.get(i);
 			g.drawImage(t.getTileImage(), t.getTileX(), t.getTileY(), game);

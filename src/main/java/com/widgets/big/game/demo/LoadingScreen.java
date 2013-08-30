@@ -1,5 +1,6 @@
 package com.widgets.big.game.demo;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,15 +14,16 @@ import com.widgets.big.game.demo.assets.AssetImage;
 import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
-import com.widgets.big.game.engine.applet.AppletGame;
 import com.widgets.big.game.engine.applet.Sprite;
 import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Screen;
 
-public class LoadingScreen extends Screen {
+public class LoadingScreen implements Screen {
+
+	private final Game game;
 
 	public LoadingScreen(Game game) {
-		super(game);
+		this.game = game;
 	}
 
 	@Override
@@ -105,11 +107,9 @@ public class LoadingScreen extends Screen {
 
 	@Override
 	public void init() {
-		super.init();
 	}
 
 	@Override
-	public void paint(Graphics g, AppletGame game) {
-		super.paint(g, game);
+	public void paint(Graphics g, Component game) {
 	}
 }

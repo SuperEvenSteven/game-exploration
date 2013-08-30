@@ -1,5 +1,6 @@
 package com.widgets.big.game.framework;
 
+
 public interface Game {
 	public Input getInput();
 
@@ -10,4 +11,5 @@ public interface Game {
 	public Screen getCurrentScreen();
 
 	public Screen getStartScreen();
+
 }
