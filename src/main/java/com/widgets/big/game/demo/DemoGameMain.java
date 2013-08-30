@@ -1,6 +1,6 @@
 package com.widgets.big.game.demo;
 
-import com.widgets.big.game.engine.ui.GameFrame;
+import com.widgets.big.game.engine.GameFrame;
 
 public class DemoGameMain {
 

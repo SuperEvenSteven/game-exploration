@@ -1,4 +1,4 @@
-package com.widgets.big.game.engine.ui;
+package com.widgets.big.game.engine;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -72,7 +72,6 @@ public class Game {
 	}
 
 	public void start() {
-		System.out.println("game applet start method fired");
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -83,7 +82,6 @@ public class Game {
 	}
 
 	public void update(java.awt.Graphics g) {
-		System.out.println("updating");
 		// Buffered drawing
 		Graphics graphics = image.getGraphics();
 		graphics.setColor(component.getBackground());
@@ -95,7 +93,6 @@ public class Game {
 	}
 
 	public void paint(java.awt.Graphics g) {
-		System.out.println("painting");
 		screen.paint(g, component);
 	}
 }

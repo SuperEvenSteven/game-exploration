@@ -18,7 +18,7 @@ import com.widgets.big.game.demo.assets.AssetPlayer;
 import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
-import com.widgets.big.game.engine.ui.Sprite;
+import com.widgets.big.game.engine.Sprite;
 import com.widgets.big.game.framework.Background;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Input.KeyEvent;

@@ -1,4 +1,4 @@
-package com.widgets.big.game.engine.ui;
+package com.widgets.big.game.engine;
 
 import java.applet.Applet;
 import java.awt.Color;
