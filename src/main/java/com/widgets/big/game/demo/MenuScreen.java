@@ -16,10 +16,6 @@ public class MenuScreen implements Screen {
 	private static final int KEY_ENTER = 10;
 
 	@Override
-	public void init() {
-	}
-
-	@Override
 	public void update(float deltaTimeMs, List<KeyEvent> keyEvents) {
 
 		// keyEvents are being modified outside of the current thread

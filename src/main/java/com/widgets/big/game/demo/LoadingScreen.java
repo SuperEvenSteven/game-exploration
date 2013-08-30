@@ -103,10 +103,6 @@ public class LoadingScreen implements Screen {
 	}
 
 	@Override
-	public void init() {
-	}
-
-	@Override
 	public void paint(Graphics g, Component game) {
 	}
 }

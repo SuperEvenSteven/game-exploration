@@ -64,8 +64,7 @@ public class FirstLevelScreen implements Screen {
 		init();
 	}
 
-	@Override
-	public void init() {
+	private void init() {
 		Assets assets = Assets.instance();
 
 		background = ((AssetImage) assets.get(AssetType.BACKGROUND)).getImage();

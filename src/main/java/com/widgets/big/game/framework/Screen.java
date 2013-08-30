@@ -7,8 +7,6 @@ import com.widgets.big.game.framework.Input.KeyEvent;
 
 public interface Screen {
 
-	void init();
-
 	void update(float deltaTimeMs, List<KeyEvent> keyEvents);
 
 	void paint(java.awt.Graphics g, Component panel);
