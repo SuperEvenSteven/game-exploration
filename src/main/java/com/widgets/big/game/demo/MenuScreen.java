@@ -5,10 +5,12 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.util.List;
 
+import com.widgets.big.game.event.NewScreen;
 import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
+import com.widgets.big.game.framework.Util;
 
 public class MenuScreen implements Screen {
 
@@ -35,7 +37,9 @@ public class MenuScreen implements Screen {
 				System.out.println(keyEvent.keyChar + " character pressed");
 				System.out.println(keyEvent.keyCode + " code pressed");
 				if (keyEvent.keyCode == KEY_ENTER) {
-					game.setScreen(new FirstLevelScreen(game));
+					// game.setScreen(new FirstLevelScreen(game));
+					Util.controller().event(
+							new NewScreen(new FirstLevelScreen(game)));
 				}
 			}
 		}

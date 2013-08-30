@@ -7,7 +7,6 @@ import java.awt.Image;
 
 import com.widgets.big.game.event.NewScreen;
 import com.widgets.big.game.framework.Game;
-import com.widgets.big.game.framework.Graphics;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Screen;
 import com.widgets.big.game.framework.Util;
@@ -26,9 +25,7 @@ public class AppletGame extends Applet implements Runnable, Game {
 
 	float timeLastRunMs = System.nanoTime();
 
-	private AppletGraphics graphics;
-
-	private AppletInput input;
+	private ComponentInput input;
 
 	private Image image;
 
@@ -44,16 +41,14 @@ public class AppletGame extends Applet implements Runnable, Game {
 		Frame frame = (Frame) this.getParent().getParent();
 		frame.setTitle("Alien Game");
 
-		graphics = new AppletGraphics();
-		input = new AppletInput(this);
+		input = new ComponentInput(this);
 
 		Util.controller().addListener(NewScreen.class,
 				new ControllerListener<NewScreen>() {
 
 					@Override
 					public void event(NewScreen event) {
-						// TODO Auto-generated method stub
-
+						AppletGame.this.setScreen(event.getScreen());
 					}
 				});
 
@@ -130,11 +125,6 @@ public class AppletGame extends Applet implements Runnable, Game {
 		screen.update(0);
 		this.screen = screen;
 
-	}
-
-	@Override
-	public Graphics getGameGraphics() {
-		return graphics;
 	}
 
 	@Override
