@@ -3,6 +3,7 @@ package com.widgets.big.game.engine.applet;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Image;
 
 import com.widgets.big.game.event.ScreenToDisplay;
@@ -17,11 +18,7 @@ public class AppletGame extends Applet {
 
 	private Screen screen;
 
-	float deltaTimeMs = 0;
-
-	java.awt.Graphics second;
-
-	float timeLastRunMs = System.nanoTime();
+	private float timeLastRunMs = System.nanoTime();
 
 	private ComponentInput input;
 
@@ -76,13 +73,12 @@ public class AppletGame extends Applet {
 	public void update(java.awt.Graphics g) {
 		if (image == null) {
 			image = createImage(this.getWidth(), this.getHeight());
-			second = image.getGraphics();
 		}
-
-		second.setColor(getBackground());
-		second.fillRect(0, 0, getWidth(), getHeight());
-		second.setColor(getForeground());
-		paint(second);
+		Graphics graphics = image.getGraphics();
+		graphics.setColor(getBackground());
+		graphics.fillRect(0, 0, getWidth(), getHeight());
+		graphics.setColor(getForeground());
+		paint(graphics);
 
 		g.drawImage(image, 0, 0, this);
 	}
@@ -97,7 +93,7 @@ public class AppletGame extends Applet {
 		// update the game repeatedly
 		while (true) {
 			try {
-				deltaTimeMs = Utils.calculateDeltaMs(timeLastRunMs);
+				float deltaTimeMs = Utils.calculateDeltaMs(timeLastRunMs);
 				screen.update(deltaTimeMs, input.getKeyEvents());
 				repaint();
 
