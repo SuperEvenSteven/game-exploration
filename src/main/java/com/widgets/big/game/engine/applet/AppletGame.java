@@ -16,18 +16,27 @@ public class AppletGame extends Applet {
 
 	private static final long serialVersionUID = 2397885928260855130L;
 
+	/**
+	 * Current screen. Changes with play.
+	 */
 	private Screen screen;
 
-	private float timeLastRunMs = System.nanoTime();
+	private final ComponentInput input;
 
-	private ComponentInput input;
+	private final Runnable runnable;
 
-	private Image image;
-
-	private Runnable runnable;
+	private final Image image;
 
 	public AppletGame(Screen startScreen) {
 		screen = startScreen;
+		runnable = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				AppletGame.this.run();
+			}
+		});
+		input = new ComponentInput(this);
+		image = createImage(this.getWidth(), this.getHeight());
 	}
 
 	@Override
@@ -40,8 +49,6 @@ public class AppletGame extends Applet {
 		setFocusable(true);
 		Frame frame = (Frame) this.getParent().getParent();
 		frame.setTitle("Alien Game");
-
-		input = new ComponentInput(this);
 
 		Util.controller().addListener(ScreenToDisplay.class,
 				new ControllerListener<ScreenToDisplay>() {
@@ -58,12 +65,6 @@ public class AppletGame extends Applet {
 	@Override
 	public void start() {
 		System.out.println("game applet start method fired");
-		runnable = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				AppletGame.this.run();
-			}
-		});
 		Thread thread = new Thread(runnable);
 		thread.start();
 	}
@@ -71,9 +72,6 @@ public class AppletGame extends Applet {
 	// Double buffering trick
 	@Override
 	public void update(java.awt.Graphics g) {
-		if (image == null) {
-			image = createImage(this.getWidth(), this.getHeight());
-		}
 		Graphics graphics = image.getGraphics();
 		graphics.setColor(getBackground());
 		graphics.fillRect(0, 0, getWidth(), getHeight());
@@ -90,6 +88,9 @@ public class AppletGame extends Applet {
 
 	private void run() {
 		System.out.println("starting loop");
+
+		float timeLastRunMs = System.nanoTime();
+
 		// update the game repeatedly
 		while (true) {
 			try {
@@ -117,7 +118,6 @@ public class AppletGame extends Applet {
 		// screen.resume();
 		screen.update(0, input.getKeyEvents());
 		this.screen = screen;
-
 	}
 
 }
