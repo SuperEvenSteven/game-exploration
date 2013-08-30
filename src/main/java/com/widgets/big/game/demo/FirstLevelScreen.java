@@ -20,7 +20,6 @@ import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
 import com.widgets.big.game.engine.applet.Sprite;
 import com.widgets.big.game.framework.Background;
-import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
@@ -51,8 +50,6 @@ public class FirstLevelScreen implements Screen {
 	private Image currentEnemyImage;
 	public static int score = 0;
 
-	private List<KeyEvent> keyEvents;
-
 	private Player hero;
 
 	private Background bg1;
@@ -63,10 +60,7 @@ public class FirstLevelScreen implements Screen {
 
 	private BufferedImage background;
 
-	private final Game game;
-
-	public FirstLevelScreen(Game game) {
-		this.game = game;
+	public FirstLevelScreen() {
 		init();
 	}
 
@@ -109,14 +103,14 @@ public class FirstLevelScreen implements Screen {
 	}
 
 	@Override
-	public void update(float deltaTimeMs) {
+	public void update(float deltaTimeMs, List<KeyEvent> keyEvents) {
 
 		// check if player has dropped off the screen
 		if (hero.getCenterY() > 480) {
 			FirstLevelScreen.gameState = GameState.DEAD;
 		}
 
-		checkKeyEvents();
+		checkKeyEvents(keyEvents);
 
 		hero.update(deltaTimeMs);
 		for (Enemy enemy : enemies) {
@@ -220,8 +214,7 @@ public class FirstLevelScreen implements Screen {
 		g.drawString("Speed y :" + Integer.toString(hero.getSpeedY()), 700, 150);
 	}
 
-	private void checkKeyEvents() {
-		keyEvents = game.getInput().getKeyEvents();
+	private void checkKeyEvents(List<KeyEvent> keyEvents) {
 		for (KeyEvent keyEvent : keyEvents) {
 			if (keyEvent.type == Input.KeyEvent.KEY_DOWN) {
 				// System.out.println(keyEvent.keyChar + " character pressed");

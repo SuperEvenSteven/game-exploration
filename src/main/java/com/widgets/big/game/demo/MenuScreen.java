@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.util.List;
 
 import com.widgets.big.game.event.NewScreen;
-import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
@@ -15,20 +14,13 @@ import com.widgets.big.game.framework.Util;
 public class MenuScreen implements Screen {
 
 	private static final int KEY_ENTER = 10;
-	private List<KeyEvent> keyEvents;
-	private final Game game;
-
-	public MenuScreen(Game game) {
-		this.game = game;
-	}
 
 	@Override
 	public void init() {
 	}
 
 	@Override
-	public void update(float deltaTimeMs) {
-		keyEvents = game.getInput().getKeyEvents();
+	public void update(float deltaTimeMs, List<KeyEvent> keyEvents) {
 
 		// keyEvents are being modified outside of the current thread
 		for (int i = 0; i < keyEvents.size(); i++) {
@@ -39,7 +31,7 @@ public class MenuScreen implements Screen {
 				if (keyEvent.keyCode == KEY_ENTER) {
 					// game.setScreen(new FirstLevelScreen(game));
 					Util.controller().event(
-							new NewScreen(new FirstLevelScreen(game)));
+							new NewScreen(new FirstLevelScreen()));
 				}
 			}
 		}

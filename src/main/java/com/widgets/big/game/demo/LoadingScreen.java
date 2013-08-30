@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -15,19 +16,15 @@ import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
 import com.widgets.big.game.engine.applet.Sprite;
-import com.widgets.big.game.framework.Game;
+import com.widgets.big.game.event.NewScreen;
+import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
+import com.widgets.big.game.framework.Util;
 
 public class LoadingScreen implements Screen {
 
-	private final Game game;
-
-	public LoadingScreen(Game game) {
-		this.game = game;
-	}
-
 	@Override
-	public void update(float deltaTimeMs) {
+	public void update(float deltaTimeMs, List<KeyEvent> keyEvents) {
 		System.out.println("loaded resources");
 		// Setup hero images
 		BufferedImage characterStanding = getImage("sprites/standing.png");
@@ -91,7 +88,7 @@ public class LoadingScreen implements Screen {
 
 		System.out.println("resources loaded");
 
-		game.setScreen(new MenuScreen(game));
+		Util.controller().event(new NewScreen(new MenuScreen()));
 	}
 
 	private BufferedImage getImage(String path) {

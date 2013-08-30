@@ -69,7 +69,7 @@ public class AppletGame extends Applet implements Runnable, Game {
 		while (true) {
 			try {
 				deltaTimeMs = Utils.calculateDeltaMs(timeLastRunMs);
-				screen.update(deltaTimeMs);
+				screen.update(deltaTimeMs, input.getKeyEvents());
 				repaint();
 
 				// at full speed this will run at 60fps by sleeping for 17ms
@@ -122,7 +122,7 @@ public class AppletGame extends Applet implements Runnable, Game {
 		// this.screen.pause();
 		// this.screen.dispose();
 		// screen.resume();
-		screen.update(0);
+		screen.update(0, input.getKeyEvents());
 		this.screen = screen;
 
 	}

@@ -9,7 +9,7 @@ public class DemoGame extends AppletGame {
 
 	@Override
 	public Screen getStartScreen() {
-		return new LoadingScreen(this);
+		return new LoadingScreen();
 	}
 
 }
