@@ -35,12 +35,12 @@ public class Game {
 	private void runGameLoop() {
 		System.out.println("starting loop");
 
-		float timeLastRunMs = System.nanoTime();
+		float timeLastRunNs = System.nanoTime();
 
 		// update the game repeatedly
 		while (true) {
 			try {
-				float deltaTimeMs = Utils.calculateDeltaMs(timeLastRunMs);
+				float deltaTimeMs = Utils.calculateDeltaMs(timeLastRunNs);
 				screen.update(deltaTimeMs, input.getKeyEvents());
 				component.repaint();
 
@@ -51,7 +51,7 @@ public class Game {
 				System.out.println(e.getMessage());
 				System.out.println(e);
 			}
-			timeLastRunMs = System.nanoTime();
+			timeLastRunNs = System.nanoTime();
 		}
 	}
 
