@@ -15,7 +15,7 @@ import com.widgets.big.game.demo.assets.AssetImage;
 import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
-import com.widgets.big.game.engine.applet.Sprite;
+import com.widgets.big.game.engine.ui.Sprite;
 import com.widgets.big.game.event.ScreenToDisplay;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;

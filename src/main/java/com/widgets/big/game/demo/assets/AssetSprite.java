@@ -1,6 +1,6 @@
 package com.widgets.big.game.demo.assets;
 
-import com.widgets.big.game.engine.applet.Sprite;
+import com.widgets.big.game.engine.ui.Sprite;
 
 public class AssetSprite implements Asset {
 

@@ -1,6 +1,6 @@
 package com.widgets.big.game.demo;
 
-import com.widgets.big.game.engine.applet.AppletGame;
+import com.widgets.big.game.engine.ui.AppletGame;
 
 public class DemoGame extends AppletGame {
 

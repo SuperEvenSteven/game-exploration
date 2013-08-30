@@ -8,7 +8,7 @@ import com.widgets.big.game.demo.assets.AssetBackground;
 import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
-import com.widgets.big.game.engine.applet.Sprite;
+import com.widgets.big.game.engine.ui.Sprite;
 import com.widgets.big.game.framework.Background;
 
 public class Player {
