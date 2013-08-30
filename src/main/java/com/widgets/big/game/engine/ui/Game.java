@@ -31,7 +31,7 @@ public class Game {
 				});
 	}
 
-	public void run() {
+	private void runGameLoop() {
 		System.out.println("starting loop");
 
 		float timeLastRunMs = System.nanoTime();
@@ -75,13 +75,14 @@ public class Game {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Game.this.run();
+				runGameLoop();
 			}
 		});
 		thread.start();
 	}
 
 	public void update(java.awt.Graphics g) {
+		System.out.println("updating");
 		// Buffered drawing
 		Graphics graphics = image.getGraphics();
 		graphics.setColor(component.getBackground());
@@ -93,6 +94,7 @@ public class Game {
 	}
 
 	public void paint(java.awt.Graphics g) {
+		System.out.println("painting");
 		screen.paint(g, component);
 	}
 }

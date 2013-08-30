@@ -6,7 +6,7 @@ import java.awt.Frame;
 
 import com.widgets.big.game.framework.Screen;
 
-public class AppletGame extends Applet {
+public class GameApplet extends Applet {
 
 	private static final long serialVersionUID = 2397885928260855130L;
 
@@ -17,7 +17,7 @@ public class AppletGame extends Applet {
 	 * 
 	 * @param startScreen
 	 */
-	public AppletGame(Screen startScreen) {
+	public GameApplet(Screen startScreen) {
 		ui = new Game(this, startScreen);
 	}
 
