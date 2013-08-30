@@ -21,11 +21,14 @@ public class AppletGame extends Applet {
 	 */
 	private Screen screen;
 
+	/**
+	 * Must be created in init() method otherwise returns null.
+	 */
+	private Image image;
+
 	private final ComponentInput input;
 
 	private final Runnable runnable;
-
-	private final Image image;
 
 	public AppletGame(Screen startScreen) {
 		screen = startScreen;
@@ -36,7 +39,6 @@ public class AppletGame extends Applet {
 			}
 		});
 		input = new ComponentInput(this);
-		image = createImage(this.getWidth(), this.getHeight());
 	}
 
 	@Override
@@ -50,6 +52,8 @@ public class AppletGame extends Applet {
 		Frame frame = (Frame) this.getParent().getParent();
 		frame.setTitle("Alien Game");
 
+		image = createImage(this.getWidth(), this.getHeight());
+
 		Util.controller().addListener(ScreenToDisplay.class,
 				new ControllerListener<ScreenToDisplay>() {
 
@@ -58,7 +62,6 @@ public class AppletGame extends Applet {
 						AppletGame.this.setScreen(event.getScreen());
 					}
 				});
-
 	}
 
 	// Starts the thread that runs our main game loop
