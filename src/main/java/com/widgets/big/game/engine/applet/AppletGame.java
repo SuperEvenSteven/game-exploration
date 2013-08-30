@@ -71,26 +71,6 @@ public class AppletGame extends Applet {
 		thread.start();
 	}
 
-	// update the game every time this loops
-	private void run() {
-		System.out.println("starting loop");
-		while (true) {
-			try {
-				deltaTimeMs = Utils.calculateDeltaMs(timeLastRunMs);
-				screen.update(deltaTimeMs, input.getKeyEvents());
-				repaint();
-
-				// at full speed this will run at 60fps by sleeping for 17ms
-				// every frame
-				Thread.sleep(17);
-			} catch (InterruptedException e) {
-				System.out.println(e.getMessage());
-				System.out.println(e);
-			}
-			timeLastRunMs = System.nanoTime();
-		}
-	}
-
 	// Double buffering trick
 	@Override
 	public void update(java.awt.Graphics g) {
@@ -110,6 +90,26 @@ public class AppletGame extends Applet {
 	@Override
 	public void paint(java.awt.Graphics g) {
 		screen.paint(g, this);
+	}
+
+	private void run() {
+		System.out.println("starting loop");
+		// update the game repeatedly
+		while (true) {
+			try {
+				deltaTimeMs = Utils.calculateDeltaMs(timeLastRunMs);
+				screen.update(deltaTimeMs, input.getKeyEvents());
+				repaint();
+
+				// at full speed this will run at 60fps by sleeping for 17ms
+				// every frame
+				Thread.sleep(17);
+			} catch (InterruptedException e) {
+				System.out.println(e.getMessage());
+				System.out.println(e);
+			}
+			timeLastRunMs = System.nanoTime();
+		}
 	}
 
 	private void setScreen(Screen screen) {
