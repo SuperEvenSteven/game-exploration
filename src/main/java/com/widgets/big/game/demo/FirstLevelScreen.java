@@ -33,7 +33,7 @@ public class FirstLevelScreen implements Screen {
 
 	public static GameState gameState = GameState.RUNNING;
 
-	private static final boolean DEBUG_ENABLED = true;
+	private static final boolean DEBUG_ENABLED = false;
 
 	// Constants
 	private static final int KEY_LEFT = 37;
