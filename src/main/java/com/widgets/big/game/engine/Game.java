@@ -24,10 +24,13 @@ public class Game {
 
 	long timeLastRunMs = System.currentTimeMillis();
 
+	private final boolean useWaitNotify;
+
 	public Game(Component component, Component keyListeningComponent,
-			Screen screen) {
+			Screen screen, boolean useWaitNotify) {
 		this.component = component;
 		this.screen = screen;
+		this.useWaitNotify = useWaitNotify;
 		input = new ComponentInput(keyListeningComponent);
 		Util.controller().addListener(ScreenToDisplay.class,
 				new ControllerListener<ScreenToDisplay>() {
@@ -66,17 +69,24 @@ public class Game {
 		screen.update(deltaTimeMs, input.getKeyEvents());
 		// asynchronously signals the paint to happen in the swing thread
 		component.repaint();
+
 		// use a lock here that is only released once the paintComponent
 		// has happened so that component.repaint() calls don't queue up that
 		// are delayed and we get jerky drawing
 
-		try {
-			synchronized (redrawLock) {
-				redrawLock.wait();
-			}
-		} catch (InterruptedException e) {
-		}
+		waitForPaint();
+
 		return System.currentTimeMillis() - t;
+	}
+
+	private void waitForPaint() {
+		if (useWaitNotify)
+			try {
+				synchronized (redrawLock) {
+					redrawLock.wait();
+				}
+			} catch (InterruptedException e) {
+			}
 	}
 
 	public void finishedPaint() {
