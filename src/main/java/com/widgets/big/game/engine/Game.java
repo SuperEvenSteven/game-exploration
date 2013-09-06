@@ -3,19 +3,26 @@ package com.widgets.big.game.engine;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.concurrent.TimeUnit;
 
 import com.widgets.big.game.event.ScreenToDisplay;
 import com.widgets.big.game.framework.Screen;
 import com.widgets.big.game.framework.Util;
-import com.widgets.big.game.utils.Utils;
 import com.widgets.util.controller.ControllerListener;
 
 public class Game {
+
+	private static final int FRAMES_PER_SECOND = 60;
+
+	public static long REFRESH_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1)
+			/ FRAMES_PER_SECOND;
 
 	private Screen screen;
 	private Image image;
 	private final Component component;
 	private final ComponentInput input;
+
+	long timeLastRunMs = System.currentTimeMillis();
 
 	public Game(Component component, Component keyListeningComponent,
 			Screen screen) {
@@ -35,23 +42,46 @@ public class Game {
 	private void runGameLoop() {
 		System.out.println("starting loop");
 
-		float timeLastRunNs = System.nanoTime();
+		// at full speed this will run at 60fps by sleeping for 17ms
+		// every frame
 
 		// update the game repeatedly
 		while (true) {
+			long durationMs = redraw();
 			try {
-				float deltaTimeMs = Utils.calculateDeltaMs(timeLastRunNs);
-				screen.update(deltaTimeMs, input.getKeyEvents());
-				component.repaint();
-
-				// at full speed this will run at 60fps by sleeping for 17ms
-				// every frame
-				Thread.sleep(17);
+				Thread.sleep(Math.max(0, REFRESH_INTERVAL_MS - durationMs));
 			} catch (InterruptedException e) {
-				System.out.println(e.getMessage());
-				System.out.println(e);
+				e.printStackTrace();
 			}
-			timeLastRunNs = System.nanoTime();
+		}
+	}
+
+	private final Object redrawLock = new Object();
+
+	private long redraw() {
+
+		long t = System.currentTimeMillis();
+		long deltaTimeMs = System.currentTimeMillis() - timeLastRunMs;
+		timeLastRunMs = System.currentTimeMillis();
+		screen.update(deltaTimeMs, input.getKeyEvents());
+		// asynchronously signals the paint to happen in the swing thread
+		component.repaint();
+		// use a lock here that is only released once the paintComponent
+		// has happened so that component.repaint() calls don't queue up that
+		// are delayed and we get jerky drawing
+
+		try {
+			synchronized (redrawLock) {
+				redrawLock.wait();
+			}
+		} catch (InterruptedException e) {
+		}
+		return System.currentTimeMillis() - t;
+	}
+
+	public void finishedPaint() {
+		synchronized (redrawLock) {
+			redrawLock.notify();
 		}
 	}
 
@@ -90,9 +120,11 @@ public class Game {
 		paint(graphics);
 
 		g.drawImage(image, 0, 0, component);
+
 	}
 
 	public void paint(java.awt.Graphics g) {
 		screen.paint(g, component);
 	}
+
 }

@@ -22,6 +22,9 @@ public class Tile {
 	private static final int RIGHT_GROUND = 6;
 	private static final int GROUND = 8;
 	private static final int DIRT = 5;
+	/**
+	 * TODO What units for speedX? e.g. pixels per second?
+	 */
 	private int tileX, tileY, speedX, type;
 	private Image tileImage;
 
@@ -65,8 +68,10 @@ public class Tile {
 	}
 
 	public void update(float deltaTimeElapsedMs) {
+
 		speedX = bg1.getSpeedX() * 5;
-		tileX += speedX;
+
+		tileX += Util.factorByElapsedTimeMs(speedX, deltaTimeElapsedMs);
 		// move the tile boundary in sync with the tile itself
 		tileBoundary.setBounds(tileX, tileY, 40, 40);
 

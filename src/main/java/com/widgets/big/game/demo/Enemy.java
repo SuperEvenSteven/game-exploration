@@ -35,7 +35,7 @@ public class Enemy {
 
 	public void update(float deltaTimeElapsedMs) {
 
-		centerX += speedX;
+		centerX += Util.factorByElapsedTimeMs(speedX, deltaTimeElapsedMs);
 		speedX = bg1.getSpeedX() * 5 + movementSpeed;
 		enemyBoundary.setBounds(centerX - 25, centerY - 25, 50, 60);
 		if (enemyBoundary.intersects(Player.perimeter)) {
