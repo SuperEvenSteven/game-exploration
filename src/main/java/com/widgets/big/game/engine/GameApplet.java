@@ -28,11 +28,12 @@ public class GameApplet extends Applet {
 		this.title = title;
 		this.requestedWidth = requestedWidth;
 		this.requestedHeight = requestedHeight;
-		game = new Game(this, this, startScreen,false);
+		game = new Game(this, this, startScreen);
 	}
 
 	@Override
 	public void init() {
+		System.out.println("initializing");
 
 		configureApplet();
 
@@ -63,7 +64,6 @@ public class GameApplet extends Applet {
 	@Override
 	public void paint(java.awt.Graphics g) {
 		game.paint(g);
-		game.finishedPaint();
 	}
 
 }

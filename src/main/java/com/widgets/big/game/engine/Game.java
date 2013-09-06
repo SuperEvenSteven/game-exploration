@@ -38,6 +38,11 @@ public class Game {
 				});
 	}
 
+	public Game(Component component, Component keyListeningComponent,
+			Screen screen) {
+		this(component, keyListeningComponent, screen, true);
+	}
+
 	private void runGameLoop() {
 		System.out.println("starting loop");
 
@@ -86,7 +91,7 @@ public class Game {
 			}
 	}
 
-	public void finishedPaint() {
+	public void clearRedrawLock() {
 		synchronized (redrawLock) {
 			redrawLock.notify();
 		}
@@ -119,6 +124,7 @@ public class Game {
 	}
 
 	public void update(java.awt.Graphics g) {
+		clearRedrawLock();
 		// Buffered drawing
 		Graphics graphics = image.getGraphics();
 		graphics.setColor(component.getBackground());
