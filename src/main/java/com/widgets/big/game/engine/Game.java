@@ -3,7 +3,6 @@ package com.widgets.big.game.engine;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.concurrent.TimeUnit;
 
 import com.widgets.big.game.event.ScreenToDisplay;
 import com.widgets.big.game.framework.Screen;
@@ -12,10 +11,7 @@ import com.widgets.util.controller.ControllerListener;
 
 public class Game {
 
-	private static final int FRAMES_PER_SECOND = 60;
-
-	public static long REFRESH_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1)
-			/ FRAMES_PER_SECOND;
+	public static long REFRESH_INTERVAL_MS = 17;
 
 	private Screen screen;
 	private Image image;
@@ -64,9 +60,10 @@ public class Game {
 	private long redraw() {
 
 		long t = System.currentTimeMillis();
-		long deltaTimeMs = System.currentTimeMillis() - timeLastRunMs;
-		timeLastRunMs = System.currentTimeMillis();
+		long deltaTimeMs = t - timeLastRunMs;
 		screen.update(deltaTimeMs, input.getKeyEvents());
+		timeLastRunMs = t;
+
 		// asynchronously signals the paint to happen in the swing thread
 		component.repaint();
 
