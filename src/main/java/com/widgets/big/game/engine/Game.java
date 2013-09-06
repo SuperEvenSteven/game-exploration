@@ -50,9 +50,6 @@ public class Game {
 	private void runGameLoop() {
 		System.out.println("starting loop");
 
-		// at full speed this will run at 60fps by sleeping for 17ms
-		// every frame
-
 		// update the game repeatedly
 		while (true) {
 			long durationMs = redraw();
@@ -95,7 +92,7 @@ public class Game {
 			}
 	}
 
-	public void clearRedrawLock() {
+	private void clearRedrawLock() {
 		synchronized (redrawLock) {
 			redrawLock.notify();
 		}
