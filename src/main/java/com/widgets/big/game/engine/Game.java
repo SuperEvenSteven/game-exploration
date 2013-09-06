@@ -3,6 +3,7 @@ package com.widgets.big.game.engine;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.concurrent.TimeUnit;
 
 import com.widgets.big.game.event.ScreenToDisplay;
 import com.widgets.big.game.framework.Screen;
@@ -11,7 +12,10 @@ import com.widgets.util.controller.ControllerListener;
 
 public class Game {
 
-	public static long REFRESH_INTERVAL_MS = 17;
+	private static final int FRAMES_PER_SECOND = 60;
+
+	public static long REFRESH_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1)
+			/ FRAMES_PER_SECOND;
 
 	private Screen screen;
 	private Image image;
