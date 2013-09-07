@@ -3,6 +3,7 @@ package com.widgets.big.game.demo;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,9 +20,12 @@ public class MyGame {
 	private final Object redrawLock = new Object();
 	private Component component;
 	private boolean keepGoing = true;
+	private Image imageBuffer;
 
 	public void start(Component component) {
 		this.component = component;
+		imageBuffer = component.createImage(component.getWidth(),
+				component.getHeight());
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -37,8 +41,6 @@ public class MyGame {
 
 	/**
 	 * Self contained demo swing game for stackoverflow frame rate question.
-	 * 
-	 * @author dave
 	 * 
 	 */
 	private void runGameLoop() {
@@ -61,27 +63,37 @@ public class MyGame {
 
 		updateModel();
 
-		drawModelToLocalImage();
+		drawModelToImageBuffer();
 
-		// asynchronously signals the paint to happen in the swing thread
+		// asynchronously signals the paint to happen in the awt event
+		// dispatcher thread
 		component.repaint();
 
 		// use a lock here that is only released once the paintComponent
-		// has happened so that component.repaint() calls don't queue up that
-		// are delayed and we get jerky drawing
-
+		// has happened so that we know exactly when the paint was completed and
+		// thus know how long to pause till the next redraw.
 		waitForPaint();
 
 		// return time taken to do redraw in ms
 		return System.currentTimeMillis() - t;
 	}
 
-	private void drawModelToLocalImage() {
-
+	private void updateModel() {
+		// do stuff here to the model based on time
 	}
 
-	private void updateModel() {
-		// do stuff here to the model
+	private void drawModelToImageBuffer() {
+		drawModel(imageBuffer.getGraphics());
+	}
+
+	private int x = 50;
+	private int y = 50;
+
+	private void drawModel(Graphics g) {
+		g.setColor(component.getBackground());
+		g.fillRect(0, 0, component.getWidth(), component.getHeight());
+		g.setColor(component.getForeground());
+		g.drawString("Hi", x++, y++);
 	}
 
 	private void waitForPaint() {
@@ -100,7 +112,8 @@ public class MyGame {
 	}
 
 	public void paint(Graphics g) {
-		// paint the model to the graphics
+		// paint the buffered image to the graphics
+		g.drawImage(imageBuffer, 0, 0, component);
 
 		// resume the game loop
 		resume();
