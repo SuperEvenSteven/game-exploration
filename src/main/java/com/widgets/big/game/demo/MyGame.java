@@ -63,6 +63,8 @@ public class MyGame {
 
 		updateModel();
 
+		// draw the model state to a buffered image which when ready will get
+		// painted by component.paint().
 		drawModelToImageBuffer();
 
 		// asynchronously signals the paint to happen in the awt event
