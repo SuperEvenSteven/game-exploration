@@ -15,6 +15,7 @@ public class GamePanel extends JPanel {
 
 	public GamePanel(Screen startScreen, Component keyListenerComponent, int w,
 			int h) {
+		super();
 		setSize(w, h);
 
 		game = new Game(this, keyListenerComponent, startScreen);
