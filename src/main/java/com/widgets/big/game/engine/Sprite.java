@@ -1,4 +1,4 @@
-package com.widgets.big.game.engine.applet;
+package com.widgets.big.game.engine;
 
 import java.awt.image.BufferedImage;
 

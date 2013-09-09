@@ -8,7 +8,7 @@ import com.widgets.big.game.demo.assets.AssetBackground;
 import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
-import com.widgets.big.game.engine.applet.Sprite;
+import com.widgets.big.game.engine.Sprite;
 import com.widgets.big.game.framework.Background;
 
 public class Player {
@@ -82,7 +82,7 @@ public class Player {
 		// Moves character or scrolls background accordingly
 
 		if (speedX < 0) {
-			centerX += speedX;
+			centerX += Util.factorByElapsedTimeMs(speedX, deltaTimeElapsedMs);
 		}
 		if (speedX == 0 || speedX < 0) {
 			bg1.setSpeedX(0);
@@ -98,7 +98,7 @@ public class Player {
 		}
 
 		// Updates Y Position
-		centerY += speedY;
+		centerY += Util.factorByElapsedTimeMs(speedY, deltaTimeElapsedMs);
 
 		// Handles Jumping
 		speedY += 1;

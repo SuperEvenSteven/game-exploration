@@ -14,7 +14,6 @@ public class MapLoader {
 	public static List<Tile> loadMap(String filename) {
 		ArrayList<String> lines = new ArrayList<String>();
 		int width = 0;
-		int height = 0;
 
 		InputStream is = MapLoader.class.getClassLoader().getResourceAsStream(
 				filename);
@@ -40,8 +39,6 @@ public class MapLoader {
 				System.out.println(e);
 			}
 		}
-
-		height = lines.size();
 
 		List<Tile> tiles = new ArrayList<Tile>();
 		for (int j = 0; j < 12; j++) {

@@ -1,32 +1,22 @@
 package com.widgets.big.game.demo;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.util.List;
 
-import com.widgets.big.game.engine.applet.AppletGame;
-import com.widgets.big.game.framework.Game;
+import com.widgets.big.game.event.ScreenToDisplay;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
+import com.widgets.big.game.framework.Util;
 
-public class MenuScreen extends Screen {
+public class MenuScreen implements Screen {
 
 	private static final int KEY_ENTER = 10;
-	private List<KeyEvent> keyEvents;
-
-	public MenuScreen(Game game) {
-		super(game);
-	}
 
 	@Override
-	public void init() {
-		super.init();
-	}
-
-	@Override
-	public void update(float deltaTimeMs) {
-		keyEvents = game.getInput().getKeyEvents();
+	public void update(float deltaTimeMs, List<KeyEvent> keyEvents) {
 
 		// keyEvents are being modified outside of the current thread
 		for (int i = 0; i < keyEvents.size(); i++) {
@@ -35,7 +25,8 @@ public class MenuScreen extends Screen {
 				System.out.println(keyEvent.keyChar + " character pressed");
 				System.out.println(keyEvent.keyCode + " code pressed");
 				if (keyEvent.keyCode == KEY_ENTER) {
-					game.setScreen(new FirstLevelScreen(game));
+					Util.controller().event(
+							new ScreenToDisplay(new FirstLevelScreen()));
 				}
 			}
 		}
@@ -43,7 +34,7 @@ public class MenuScreen extends Screen {
 	}
 
 	@Override
-	public void paint(Graphics g, AppletGame game) {
+	public void paint(Graphics g, Component game) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 800, 480);
 		g.setColor(Color.WHITE);
