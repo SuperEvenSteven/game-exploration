@@ -47,6 +47,8 @@ public class MyGame {
 		// update the game repeatedly
 		while (keepGoing) {
 			long durationMs = redraw();
+			if (durationMs > REFRESH_INTERVAL_MS)
+				System.out.println(durationMs + "mss");
 			try {
 				Thread.sleep(Math.max(0, REFRESH_INTERVAL_MS - durationMs));
 			} catch (InterruptedException e) {
@@ -96,6 +98,8 @@ public class MyGame {
 		g.fillRect(0, 0, component.getWidth(), component.getHeight());
 		g.setColor(component.getForeground());
 		g.drawString("Hi", x++, y++);
+		x %= 600;
+		y %= 400;
 	}
 
 	private void waitForPaint() {
