@@ -1,6 +1,7 @@
 package com.widgets.big.game.demo;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -17,16 +18,14 @@ import com.widgets.big.game.demo.assets.AssetPlayer;
 import com.widgets.big.game.demo.assets.AssetSprite;
 import com.widgets.big.game.demo.assets.Assets;
 import com.widgets.big.game.demo.assets.Assets.AssetType;
-import com.widgets.big.game.engine.applet.AppletGame;
-import com.widgets.big.game.engine.applet.Sprite;
+import com.widgets.big.game.engine.Sprite;
 import com.widgets.big.game.framework.Background;
-import com.widgets.big.game.framework.Game;
 import com.widgets.big.game.framework.Input;
 import com.widgets.big.game.framework.Input.KeyEvent;
 import com.widgets.big.game.framework.Screen;
 import com.widgets.big.game.utils.MapLoader;
 
-public class FirstLevelScreen extends Screen {
+public class FirstLevelScreen implements Screen {
 
 	enum GameState {
 		RUNNING, DEAD
@@ -34,7 +33,7 @@ public class FirstLevelScreen extends Screen {
 
 	public static GameState gameState = GameState.RUNNING;
 
-	private static final boolean DEBUG_ENABLED = true;
+	private static final boolean DEBUG_ENABLED = false;
 
 	// Constants
 	private static final int KEY_LEFT = 37;
@@ -51,8 +50,6 @@ public class FirstLevelScreen extends Screen {
 	private Image currentEnemyImage;
 	public static int score = 0;
 
-	private List<KeyEvent> keyEvents;
-
 	private Player hero;
 
 	private Background bg1;
@@ -63,13 +60,11 @@ public class FirstLevelScreen extends Screen {
 
 	private BufferedImage background;
 
-	public FirstLevelScreen(Game game) {
-		super(game);
+	public FirstLevelScreen() {
 		init();
 	}
 
-	@Override
-	public void init() {
+	private void init() {
 		Assets assets = Assets.instance();
 
 		background = ((AssetImage) assets.get(AssetType.BACKGROUND)).getImage();
@@ -107,14 +102,14 @@ public class FirstLevelScreen extends Screen {
 	}
 
 	@Override
-	public void update(float deltaTimeMs) {
+	public void update(float deltaTimeMs, List<KeyEvent> keyEvents) {
 
 		// check if player has dropped off the screen
 		if (hero.getCenterY() > 480) {
 			FirstLevelScreen.gameState = GameState.DEAD;
 		}
 
-		checkKeyEvents();
+		checkKeyEvents(keyEvents);
 
 		hero.update(deltaTimeMs);
 		for (Enemy enemy : enemies) {
@@ -144,7 +139,7 @@ public class FirstLevelScreen extends Screen {
 	}
 
 	@Override
-	public void paint(Graphics g, AppletGame game) {
+	public void paint(Graphics g, Component game) {
 
 		if (gameState == GameState.RUNNING) {
 
@@ -200,7 +195,7 @@ public class FirstLevelScreen extends Screen {
 		}
 	}
 
-	private void paintTiles(Graphics g, AppletGame game) {
+	private void paintTiles(Graphics g, Component game) {
 		for (int i = 0; i < tiles.size(); i++) {
 			Tile t = tiles.get(i);
 			g.drawImage(t.getTileImage(), t.getTileX(), t.getTileY(), game);
@@ -218,8 +213,7 @@ public class FirstLevelScreen extends Screen {
 		g.drawString("Speed y :" + Integer.toString(hero.getSpeedY()), 700, 150);
 	}
 
-	private void checkKeyEvents() {
-		keyEvents = game.getInput().getKeyEvents();
+	private void checkKeyEvents(List<KeyEvent> keyEvents) {
 		for (KeyEvent keyEvent : keyEvents) {
 			if (keyEvent.type == Input.KeyEvent.KEY_DOWN) {
 				// System.out.println(keyEvent.keyChar + " character pressed");

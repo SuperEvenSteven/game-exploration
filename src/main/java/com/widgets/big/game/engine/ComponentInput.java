@@ -1,48 +1,58 @@
-package com.widgets.big.game.engine.applet;
+package com.widgets.big.game.engine;
 
+import java.awt.Component;
 import java.util.List;
 
 import com.widgets.big.game.framework.Input;
 
-public class AppletInput implements Input {
-	AppletKeyHandler keyHandler;
+public class ComponentInput implements Input {
+	ComponentKeyHandler keyHandler;
 
-	public AppletInput(AppletGame game) {
-		keyHandler = new AppletKeyHandler(game);
+	public ComponentInput(Component component) {
+		keyHandler = new ComponentKeyHandler(component);
 	}
 
+	@Override
 	public boolean isKeyPressed(int keyCode) {
 		return false;
 	}
 
+	@Override
 	public boolean isTouchDown(int pointer) {
 		return false;
 	}
 
+	@Override
 	public int getTouchX(int pointer) {
 		return 0;
 	}
 
+	@Override
 	public int getTouchY(int pointer) {
 		return 0;
 	}
 
+	@Override
 	public float getAccelX() {
 		return 0;
 	}
 
+	@Override
 	public float getAccelY() {
 		return 0;
 	}
 
+	@Override
 	public float getAccelZ() {
 		return 0;
 	}
 
+	@Override
 	public List<KeyEvent> getKeyEvents() {
 		return keyHandler.getKeyEvents();
 	}
 
+	@Override
 	public List<TouchEvent> getTouchEvents() {
 		return null;
 	}

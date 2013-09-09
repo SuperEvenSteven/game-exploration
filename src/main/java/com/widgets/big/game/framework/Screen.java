@@ -1,23 +1,14 @@
 package com.widgets.big.game.framework;
 
-import com.widgets.big.game.engine.applet.AppletGame;
+import java.awt.Component;
+import java.util.List;
 
-public abstract class Screen {
+import com.widgets.big.game.framework.Input.KeyEvent;
 
-	protected final Game game;
+public interface Screen {
 
-	public Screen(Game game) {
-		this.game = game;
-	}
+	void update(float deltaTimeMs, List<KeyEvent> keyEvents);
 
-	public void init() {
-	}
-
-	public void update(float deltaTimeMs) {
-	}
-
-	public void paint(java.awt.Graphics g, AppletGame game) {
-
-	}
+	void paint(java.awt.Graphics g, Component panel);
 
 }
