@@ -1,6 +1,6 @@
 game-exploration
 ================
-Demonstration sprite based games written in java using swing.
+Demonstration of how sprite based games can be written in java using swing.
 
 Run game either as an applet or via a main class.
 
