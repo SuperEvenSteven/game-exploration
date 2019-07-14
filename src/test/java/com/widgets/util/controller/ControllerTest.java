@@ -6,6 +6,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
 
+import com.ohair.stephen.util.controller.ControllerListener;
+import com.ohair.stephen.util.controller.Event;
+import com.ohair.stephen.util.controller.SynchronousController;
+
 public class ControllerTest {
 
 	@Test
