@@ -7,11 +7,11 @@
 		<artifactId>game-exploration</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<packaging>jar</packaging>
+
 	<artifactId>mini-sdk</artifactId>
 	<description>A small Java game sdk.</description>
-	<version>${project.parent.version}</version>
 	<name>${project.artifactId}</name>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
