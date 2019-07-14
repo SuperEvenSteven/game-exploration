@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>sample</artifactId>
-	<description>A sample game using mini-sdk.</description>
+	<description>A sample game using java-game-engine.</description>
 	<name>${project.artifactId}</name>
 	<packaging>jar</packaging>
 
@@ -20,7 +20,7 @@
 
 	<dependencies>
 		<dependency>
-			<artifactId>mini-sdk</artifactId>
+			<artifactId>java-game-engine</artifactId>
 			<groupId>com.ohair.stephen</groupId>
 			<version>${project.parent.version}</version>
 		</dependency>
