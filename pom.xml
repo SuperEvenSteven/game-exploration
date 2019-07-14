@@ -10,7 +10,7 @@
 
 	<modules>
 		<module>java-game-engine</module>
-		<module>sample</module>
+		<module>sample-game</module>
 	</modules>
 
 	<properties>
